@@ -25,3 +25,22 @@ export const resetIngredient = () => {
         type: actionTypes.RESET_INGREDIENT
     }
 }
+
+export const loadOrder = orders => {
+    return {
+        type: actionTypes.LOAD_ORDER,
+        payload: orders
+    }
+}
+
+export const orderLoadFailed = () => {
+    return {
+        type: actionTypes.ORDER_LOAD_FAILED
+    }
+}
+
+export const fetchOrders = () => dispatch => {
+    fetch('https://burger-builder-55d2b-default-rtdb.firebaseio.com/orders.json')
+    .then(response => response.json())
+    .then(data => dispatch(loadOrder(data)))
+}

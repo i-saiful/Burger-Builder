@@ -7,7 +7,10 @@ const INITIAL_STATE = {
         { type: 'cheese', amount: 0 }
     ],
     totalPrice: 80,
-    purchassble: false
+    purchassble: false,
+    orderLoading: true,
+    orderError: false,
+    orders: []
 }
 
 const INGREDIENT_PRICES = {
@@ -57,7 +60,19 @@ export const reducer = (state = INITIAL_STATE, action) => {
         case actionTypes.RESET_INGREDIENT:
             return {
                 ...state,
-                ...INITIAL_STATE
+                ingredients: [
+                    { type: 'salad', amount: 0 },
+                    { type: 'meat', amount: 0 },
+                    { type: 'cheese', amount: 0 }
+                ],
+                totalPrice: 80,
+                purchassble: false
+            }
+
+        case actionTypes.LOAD_ORDER:
+            console.log(action.payload);
+            return {
+                ...state
             }
 
         default:
