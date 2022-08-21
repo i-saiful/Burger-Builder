@@ -54,6 +54,12 @@ export const reducer = (state = INITIAL_STATE, action) => {
                 purchassble: sum > 0
             }
 
+        case actionTypes.RESET_INGREDIENT:
+            return {
+                ...state,
+                ...INITIAL_STATE
+            }
+
         default:
             return state
     }

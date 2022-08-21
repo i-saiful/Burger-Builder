@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Button, Moda } from 'reactstrap'
+import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Spinner from '../../../Spinner/Spinner'
+import { resetIngredient } from '../../../../Redux/actionCreators'
 
 const mapStateToProps = state => ({
   ingredients: state.ingredients,
@@ -10,12 +11,18 @@ const mapStateToProps = state => ({
   totalPrice: state.totalPrice
 })
 
+const mapDispatchToProps = dispatch => ({
+  resetIngredient: () => dispatch(resetIngredient())
+})
+
 class Checkout extends Component {
   state = {
     delivaryAddress: '',
     phone: '',
     paymentType: 'Cash On Delivaray',
-    isLoading: false
+    isLoading: false,
+    isModalOpen: false,
+    Modalmsg: ''
   }
 
   handleInputChange = e => {
@@ -41,18 +48,34 @@ class Checkout extends Component {
       method: 'POST',
       body: JSON.stringify(order)
     }).then(
-      () => this.setState({
-        isLoading: false
-      })
-    ).catch(
-      () => this.setState({
-        isLoading: false
-      })
+      response => {
+        if (response.status === 200) {
+          this.setState({
+            isLoading: false,
+            isModalOpen: true,
+            Modalmsg: 'Order place Successfully!'
+          })
+          this.props.resetIngredient();
+        } else {
+          this.setState({
+            isLoading: false,
+            isModalOpen: true,
+            Modalmsg: 'Something Went Wrong! place try again'
+          })
+        }
+      }
     )
+      .catch(
+        () => this.setState({
+          isLoading: false,
+          isModalOpen: true,
+          Modalmsg: 'Something Went Wrong! place try again'
+        })
+      )
   }
 
   render() {
-    const form = <div>
+    const form = (<div>
       <h4 style={{
         border: "1px solid gray",
         boxShadow: '1px 1px #888',
@@ -105,13 +128,23 @@ class Checkout extends Component {
             onClick={this.goBack} className="ml-3">Cancle</Button>
         </Link>
       </form>
-    </div>
+    </div>)
     return (
       <div>
-        {this.state.isLoading ? <Spinner /> : form }
+        {this.state.isLoading ? <Spinner /> : form}
+        <Modal isOpen={this.state.isModalOpen} >
+          <ModalBody>
+            <p>{this.state.Modalmsg}</p>
+          </ModalBody>
+          <ModalFooter>
+            <Link to="/">
+              <Button color='primary'>Back to Home Page</Button>
+            </Link>
+          </ModalFooter>
+        </Modal>
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps)(Checkout)
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
