@@ -34,14 +34,12 @@ export const reducer = (state = INITIAL_STATE, action) => {
                 totalPrice: INGREDIENT_PRICES[action.payload] + state.totalPrice
             }
         case actionTypes.REMOVE_INGREDIENT:
-            ingredients.map(item => {
+            for (let item of ingredients) {
                 if (item.type === action.payload) {
-                    if (item.amount <= 0) {
-                        return state
-                    }
-                    item.amount--
+                    if (item.amount <= 0) return state;
+                    item.amount--;
                 }
-            })
+            }
             return {
                 ...state,
                 ingredients: ingredients,
@@ -70,9 +68,25 @@ export const reducer = (state = INITIAL_STATE, action) => {
             }
 
         case actionTypes.LOAD_ORDER:
-            console.log(action.payload);
+            const orders = []
+            for(let key in action.payload) {
+                orders.push({
+                    ...action.payload[key],
+                    id: key
+                })
+            }
+            // console.log(orders);
             return {
-                ...state
+                ...state,
+                orders: orders,
+                orderLoading: false
+            }
+
+        case actionTypes.ORDER_LOAD_FAILED:
+            return {
+                ...state,
+                orderError: true,
+                orderLoading: false
             }
 
         default:

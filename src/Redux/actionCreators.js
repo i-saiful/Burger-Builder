@@ -41,6 +41,7 @@ export const orderLoadFailed = () => {
 
 export const fetchOrders = () => dispatch => {
     fetch('https://burger-builder-55d2b-default-rtdb.firebaseio.com/orders.json')
-    .then(response => response.json())
-    .then(data => dispatch(loadOrder(data)))
+        .then(response => response.json())
+        .then(data => dispatch(loadOrder(data)))
+        .catch(err => dispatch(orderLoadFailed()))
 }

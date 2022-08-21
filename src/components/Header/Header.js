@@ -26,10 +26,10 @@ function Header() {
                     className='mr-md-5'
                 >
                     <NavItem>
-                        <NavLink exact to='/' className='NavLink'>
+                        <NavLink exact='true' to='/' className='NavLink'>
                             Burger Builder
                         </NavLink>
-                        <NavLink exact to='/orders' className='NavLink'>
+                        <NavLink exact='true' to='/orders' className='NavLink'>
                             Orders
                         </NavLink>
                     </NavItem>
