@@ -38,6 +38,7 @@ function Controls(props) {
                 <Button
                     onClick={props.toggleModal}
                     disabled={!props.purchassble}
+                    style={{ backgroundColor: '#d70f64' }}
                 >
                     Order now
                 </Button>

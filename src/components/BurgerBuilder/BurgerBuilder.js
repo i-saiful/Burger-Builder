@@ -75,7 +75,7 @@ export class BurgerBuilder extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <Link to="/checkout" >
-                            <Button color='success'>
+                            <Button style={{ backgroundColor: '#d70f64' }}>
                                 Continue to checkout
                             </Button>
                         </Link>
