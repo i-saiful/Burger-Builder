@@ -10,7 +10,9 @@ const INITIAL_STATE = {
     purchassble: false,
     orderLoading: true,
     orderError: false,
-    orders: []
+    orders: [],
+    userId: null,
+    token: null
 }
 
 const INGREDIENT_PRICES = {
@@ -88,6 +90,13 @@ export const reducer = (state = INITIAL_STATE, action) => {
                 orderError: true,
                 orderLoading: false
             }
+
+            case actionTypes.AUTH_SUCCESS:
+                return {
+                    ...state,
+                    token: action.payload.token,
+                    userId: action.payload.userId
+                }
 
         default:
             return state

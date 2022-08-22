@@ -8,8 +8,36 @@ import {
 } from 'reactstrap';
 import './Header.css'
 import Logo from '../../assets/logo.png'
+import { connect } from 'react-redux';
 
-function Header() {
+const matStateToProps = state => ({
+    token: state.token
+})
+
+function Header(props) {
+    let links = (
+        <Nav className='mr-md-5'>
+            <NavItem>
+                <NavLink exact='true' to='/login' className='NavLink'>
+                    Login
+                </NavLink>
+            </NavItem>
+        </Nav>
+    )
+    if (props.token) {
+        links = (
+            <Nav className='mr-md-5'>
+                <NavItem>
+                    <NavLink exact='true' to='/' className='NavLink'>
+                        Burger Builder
+                    </NavLink>
+                    <NavLink exact='true' to='/orders' className='NavLink'>
+                        Orders
+                    </NavLink>
+                </NavItem>
+            </Nav>
+        )
+    }
     return (
         <div className='Navigation'>
             <Navbar style={{
@@ -17,26 +45,15 @@ function Header() {
                 height: '70px'
             }}>
                 <NavbarBrand
-                    href='/'
+                    to='/'
                     className='mr-auto ml-md-5 Brand'
                 >
                     <img src={Logo} alt="logo" width="80px" />
                 </NavbarBrand>
-                <Nav
-                    className='mr-md-5'
-                >
-                    <NavItem>
-                        <NavLink exact='true' to='/' className='NavLink'>
-                            Burger Builder
-                        </NavLink>
-                        <NavLink exact='true' to='/orders' className='NavLink'>
-                            Orders
-                        </NavLink>
-                    </NavItem>
-                </Nav>
+                {links}
             </Navbar>
         </div>
     )
 }
 
-export default Header
+export default connect(matStateToProps)(Header)
