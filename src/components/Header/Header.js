@@ -34,6 +34,9 @@ function Header(props) {
                     <NavLink exact='true' to='/orders' className='NavLink'>
                         Orders
                     </NavLink>
+                    <NavLink exact='true' to='/logout' className='NavLink'>
+                        Logout
+                    </NavLink>
                 </NavItem>
             </Nav>
         )

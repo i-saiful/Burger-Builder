@@ -71,7 +71,7 @@ export const reducer = (state = INITIAL_STATE, action) => {
 
         case actionTypes.LOAD_ORDER:
             const orders = []
-            for(let key in action.payload) {
+            for (let key in action.payload) {
                 orders.push({
                     ...action.payload[key],
                     id: key
@@ -91,13 +91,20 @@ export const reducer = (state = INITIAL_STATE, action) => {
                 orderLoading: false
             }
 
-            case actionTypes.AUTH_SUCCESS:
-                return {
-                    ...state,
-                    token: action.payload.token,
-                    userId: action.payload.userId
-                }
+        case actionTypes.AUTH_SUCCESS:
+            return {
+                ...state,
+                token: action.payload.token,
+                userId: action.payload.userId
+            }
 
+        case actionTypes.AUTH_LOGOUT:
+            return {
+                ...state,
+                token: null,
+                userId: null
+            }
+            
         default:
             return state
     }

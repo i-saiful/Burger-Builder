@@ -30,8 +30,15 @@ export const auth = (email, password, mode) => dispatch => {
         const expirationTime = new Date(new Date().getTime() + data.expiresIn * 1000)
         localStorage.setItem('expirationTime', expirationTime)
         dispatch(authSuccess(data.idToken, data.loacalId))
-        console.log(data)
+        // console.log(data)
     })
+}
+
+export const logout = () => {
+    localStorage.clear()
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
 }
 
 export const authCheck = () => dispatch => {
@@ -44,8 +51,10 @@ export const authCheck = () => dispatch => {
             dispatch(authSuccess(token, userId))
         } else {
             // Logut
+            dispatch(logout())
         }
     } else {
         // Logout
+        dispatch(logout())
     }
 }
