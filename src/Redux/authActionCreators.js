@@ -24,8 +24,28 @@ export const auth = (email, password, mode) => dispatch => {
         body: JSON.stringify(authData)
     }).then(response =>
         response.json()
-    ).then(data =>
+    ).then(data => {
+        localStorage.setItem('token', data.idToken)
+        localStorage.setItem('userId', data.loacalId)
+        const expirationTime = new Date(new Date().getTime() + data.expiresIn * 1000)
+        localStorage.setItem('expirationTime', expirationTime)
         dispatch(authSuccess(data.idToken, data.loacalId))
-        // console.log(data)
-    )
+        console.log(data)
+    })
+}
+
+export const authCheck = () => dispatch => {
+    const token = localStorage.getItem('token')
+    if (token) {
+        const expirationTime = new Date(localStorage.getItem('expirationTime'))
+        if (new Date() <= expirationTime) {
+            // set validation
+            const userId = localStorage.getItem('userId')
+            dispatch(authSuccess(token, userId))
+        } else {
+            // Logut
+        }
+    } else {
+        // Logout
+    }
 }
