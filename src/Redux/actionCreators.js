@@ -39,9 +39,19 @@ export const orderLoadFailed = () => {
     }
 }
 
-export const fetchOrders = () => dispatch => {
-    fetch('https://burger-builder-55d2b-default-rtdb.firebaseio.com/orders.json')
+export const fetchOrders = (token) => dispatch => {
+    fetch('https://burger-builder-55d2b-default-rtdb.firebaseio.com/orders.json?auth=' + token)
         .then(response => response.json())
-        .then(data => dispatch(loadOrder(data)))
-        .catch(err => dispatch(orderLoadFailed()))
+        .then(data => {
+            if (!data.error) {
+                dispatch(loadOrder(data))
+            } else {
+                dispatch(orderLoadFailed())
+            }
+            console.log(data.error);
+        })
+        .catch(err => {
+            // console.log(err);
+            dispatch(orderLoadFailed())
+        })
 }

@@ -8,7 +8,9 @@ import { resetIngredient } from '../../../../Redux/actionCreators'
 const mapStateToProps = state => ({
   ingredients: state.ingredients,
   purchassble: state.purchassble,
-  totalPrice: state.totalPrice
+  totalPrice: state.totalPrice,
+  userId: state.userId,
+  token: state.token
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -37,14 +39,16 @@ class Checkout extends Component {
     this.setState({
       isLoading: true
     })
+    console.log(this.props);
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice,
+      userId: this.props.userId,
       customer: this.state,
       orderTime: new Date()
     }
     // console.log(order);
-    fetch('https://burger-builder-55d2b-default-rtdb.firebaseio.com/orders.json', {
+    fetch('https://burger-builder-55d2b-default-rtdb.firebaseio.com/orders.json?auth=' + this.props.token, {
       method: 'POST',
       body: JSON.stringify(order)
     }).then(
