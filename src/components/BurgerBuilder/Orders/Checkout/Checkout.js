@@ -39,7 +39,7 @@ class Checkout extends Component {
     this.setState({
       isLoading: true
     })
-    console.log(this.props);
+    // console.log(this.props); // console log
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice,
@@ -79,6 +79,7 @@ class Checkout extends Component {
   }
 
   render() {
+    // console.log(this.props); // console log
     const form = (<div>
       <h4 style={{
         border: "1px solid gray",

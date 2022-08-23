@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
 class Main extends Component {
     componentDidMount() {
         this.props.authCheck()
+        // console.log(this.props); // console log
     }
 
     render() {

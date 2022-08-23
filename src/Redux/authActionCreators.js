@@ -29,10 +29,12 @@ export const auth = (email, password, mode) => dispatch => {
     ).then(data => {
         dispatch(authLoading(false))
         localStorage.setItem('token', data.idToken)
-        localStorage.setItem('userId', data.loacalId)
+        localStorage.setItem('userId', data.localId)
         const expirationTime = new Date(new Date().getTime() + data.expiresIn * 1000)
         localStorage.setItem('expirationTime', expirationTime)
-        dispatch(authSuccess(data.idToken, data.loacalId))
+        dispatch(authSuccess(data.idToken, data.localId))
+        // console.log('auth action createor'); // Hits
+        // console.log(data.idToken, 'localid: ', data.localId) // check id, token 
 
         // error catch
         if (data.error.code === 400) {
